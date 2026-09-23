@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Henry Dibie</title>
 <meta name="description" content="ML, LLM &amp; Backend Systems Engineer — production ML pipelines, LLM &amp; agentic systems, model/AI evaluation, and backend infrastructure. A live registry of shipped systems, synced from GitHub.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -195,6 +196,69 @@
     .ledger-cell:nth-child(2){border-right:none;}
   }
 
+  /* ---------- Activity sparkline ---------- */
+  .activity{
+    border:1px solid var(--line-strong);
+    border-top:none;
+    padding:22px 24px 18px;
+  }
+  .activity-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:16px;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .activity-title{
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+  }
+  .activity-summary{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--ink-dim);
+  }
+  .activity-bars{
+    display:flex;
+    align-items:flex-end;
+    gap:3px;
+    height:56px;
+  }
+  .activity-bar{
+    flex:1;
+    max-width:24px;
+    background:var(--accent);
+    border-radius:3px 3px 0 0;
+    min-height:2px;
+    position:relative;
+  }
+  .activity-bar:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:2px;
+  }
+  .activity-bar .peak-label{
+    position:absolute;
+    top:-17px;
+    left:50%;
+    transform:translateX(-50%);
+    font-family:var(--font-mono);
+    font-size:10px;
+    color:var(--ink-dim);
+    white-space:nowrap;
+  }
+  .activity-labels{
+    display:flex;
+    justify-content:space-between;
+    margin-top:8px;
+    font-family:var(--font-mono);
+    font-size:10px;
+    color:var(--ink-faint);
+  }
+
   .thesis{
     max-width:66ch;
     margin:36px 0 0;
@@ -240,13 +304,29 @@
   .sys-entry:first-of-type{padding-top:30px;}
   .sys-status{
     display:flex;
-    align-items:center;
-    gap:7px;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:12px;
     font-family:var(--font-mono);
     font-size:11px;
     letter-spacing:0.06em;
     color:var(--status-live);
     padding-top:4px;
+  }
+  .sys-icon{
+    width:30px;
+    height:30px;
+    border:1px solid var(--line-strong);
+    border-radius:4px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--ink-dim);
+    flex-shrink:0;
+  }
+  .sys-icon svg{width:16px;height:16px;}
+  @media (max-width:640px){
+    .sys-status{flex-direction:row;align-items:center;}
   }
   .sys-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;}
   .sys-head h3{
@@ -287,7 +367,7 @@
   .sys-links a:hover{color:var(--accent);border-color:var(--accent);}
   @media (max-width:640px){
     .sys-entry{grid-template-columns:1fr;gap:8px;}
-    .sys-links{flex-direction:row;text-align:left;padding-top:6px;}
+    .sys-links{flex-direction:row;flex-wrap:wrap;text-align:left;padding-top:6px;white-space:normal;}
   }
 
   /* ---------- Registry ---------- */
@@ -439,6 +519,15 @@
     <div class="ledger-cell"><div class="ledger-num" id="statLive">—</div><div class="ledger-label">Deployed with a live URL</div></div>
   </div>
 
+  <div class="activity">
+    <div class="activity-head">
+      <span class="activity-title">Push activity — last 12 months</span>
+      <span class="activity-summary" id="activitySummary"></span>
+    </div>
+    <div class="activity-bars" id="activityBars"></div>
+    <div class="activity-labels" id="activityLabels"></div>
+  </div>
+
   <p class="thesis">Most of what's below shipped in the last twelve months: <strong>payment infrastructure, backend engineering, RAG and agentic systems, production ML platforms, and full-stack products</strong> — on top of an earlier run of applied data-science and analytics work. The registry underneath pulls straight from GitHub, so it's never behind what's actually public.</p>
 
   <section class="block">
@@ -563,62 +652,87 @@
     {
       repos: ["switchyard"],
       blurb: "Production-oriented ISO 8583 payment switch reference implementation on Java and Spring Boot — the routing and rail logic behind card and wire transactions, built to portfolio-milestone discipline end to end.",
-      tags: ["Java", "Spring Boot", "ISO 8583", "Payments infra"]
+      tags: ["Java", "Spring Boot", "ISO 8583", "Payments infra"],
+      icon: "shuffle"
     },
     {
       repos: ["schema-watch"],
       blurb: "An npm CLI that diffs live API response shapes — not values — names the exact frontend files a breaking change will break, and fails CI before it ships. Published to npm, own SaaS.",
       tags: ["TypeScript", "Node.js", "CI/CD", "npm package"],
-      image: "https://schema-watch-web.vercel.app/og.png"
+      image: "https://schema-watch-web.vercel.app/og.png",
+      icon: "terminal"
     },
     {
       repos: ["interview-copilot"],
       blurb: "Real-time interview-prep desktop app with a local-first LLM router and native audio capture, so responses never leave the machine mid-interview. Tauri + React.",
-      tags: ["TypeScript", "Tauri", "React", "Local LLM"]
+      tags: ["TypeScript", "Tauri", "React", "Local LLM"],
+      icon: "mic"
     },
     {
       repos: ["pulse-platform", "pulse-agent"],
       blurb: "Multi-tenant persona API: one shared, persisted user model drives persona-conditioned review simulation and recommendations across tenants — grew out of a hackathon LangGraph agent into a deployed platform.",
-      tags: ["Python", "FastAPI", "LangGraph"]
+      tags: ["Python", "FastAPI", "LangGraph"],
+      icon: "activity"
     },
     {
       repos: ["ajoledger-api", "ajoledger-web"],
       blurb: "A coordination layer for Nigerian rotating savings groups (ajo/esusu/adashe) that never touches the money. FastAPI + Postgres backend, PWA frontend — replaces WhatsApp screenshots with one shared source of truth for contributions, rotation order, and disputes.",
-      tags: ["Python", "FastAPI", "PostgreSQL", "PWA"]
+      tags: ["Python", "FastAPI", "PostgreSQL", "PWA"],
+      icon: "book"
     },
     {
       repos: ["knowledge-rag-api"],
       blurb: "Production RAG backend over Document360 and SharePoint: pgvector hybrid search, per-user ACL filtering, and grounded answers with citations — FastAPI on Aurora Postgres.",
-      tags: ["Python", "FastAPI", "pgvector", "AWS Aurora"]
+      tags: ["Python", "FastAPI", "pgvector", "AWS Aurora"],
+      icon: "database"
     },
     {
       repos: ["multivendor-marketplace-platform", "multivendor-marketplace-mobile"],
       blurb: "Location-based multi-vendor marketplace for small businesses across Nigeria — Firebase backend plus a cross-platform iOS/Android/Web app with catalog, cart, real-time chat, and subscriptions.",
-      tags: ["TypeScript", "Firebase", "React Native"]
+      tags: ["TypeScript", "Firebase", "React Native"],
+      icon: "bag"
     },
     {
       repos: ["churn-intelligence-platform"],
       blurb: "Production ML platform for subscription churn: FastAPI scoring service, XGBoost with SHAP explainability, PSI-based drift monitoring, and a Streamlit ops dashboard — real-time and 10k-row batch scoring, containerized.",
-      tags: ["Python", "XGBoost", "Docker", "Azure"]
+      tags: ["Python", "XGBoost", "Docker", "Azure"],
+      icon: "bars"
     },
     {
       repos: ["deal-intelligence-agent"],
       blurb: "A cross-market financial intelligence agent that reads regulatory filings and financial news continuously, surfacing M&A activity, credit distress, insider activity, and regulatory signals as structured analyst-grade briefs.",
-      tags: ["Python", "Agentic pipeline", "NLP"]
+      tags: ["Python", "Agentic pipeline", "NLP"],
+      icon: "radio"
     },
     {
       repos: ["the-scribe"],
       blurb: "A collaboration: AI writing assistant for Christian authors — personalized voice modeling and theological ghostwriting for long-form manuscript generation, deployed and in active use.",
       tags: ["Python", "LLM", "Voice modeling", "Collaboration"],
-      image: "https://the-scribe-ebon.vercel.app/og.png"
+      image: "https://the-scribe-ebon.vercel.app/og.png",
+      icon: "feather"
     },
     {
       repos: ["chirp-api-refactoring"],
       blurb: "Production refactoring of a Twitter-like gRPC API: replaced SHA-256 passwords with bcrypt behind a transparent migration, cut N+1 queries from 31 to 3 per feed load, added request tracing and a unified error taxonomy, and wired a CI pipeline with moonrepo affected-project detection.",
       tags: ["gRPC", "TypeScript", "Python", "Security", "Performance"],
-      image: "https://raw.githubusercontent.com/HenryMorganDibie/chirp-api-refactoring/main/docs/audit-summary.png"
+      image: "https://raw.githubusercontent.com/HenryMorganDibie/chirp-api-refactoring/main/docs/audit-summary.png",
+      icon: "shield"
     }
   ];
+
+  var ICONS = {
+    shuffle: '<polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/>',
+    terminal: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
+    mic: '<path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/>',
+    activity: '<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>',
+    book: '<path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>',
+    database: '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 5v14c0 1.66-4 3-9 3s-9-1.34-9-3V5"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>',
+    bag: '<path d="M6 2l-3 4v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>',
+    bars: '<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>',
+    radio: '<circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 010 8.49M7.76 16.25a6 6 0 010-8.49m11.31-2.83a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/>',
+    feather: '<path d="M20.24 12.24a6 6 0 00-8.49-8.49L5 10.5V19h8.5z"/><path d="M16 8L2 22"/><path d="M17.5 15H9"/>',
+    shield: '<path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/>'
+  };
 
   function ghUrl(name){ return "https://github.com/" + GH_USER + "/" + name; }
   function esc(s){
@@ -652,9 +766,11 @@
       });
 
       var shot = group.image ? '<img class="sys-shot" src="' + esc(group.image) + '" alt="' + esc(name) + ' preview" loading="lazy">' : '';
+      var iconPath = ICONS[group.icon] || "";
+      var iconSvg = iconPath ? '<span class="sys-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + iconPath + '</svg></span>' : "";
 
       out += '<article class="sys-entry">' +
-        '<div class="sys-status"><span class="tag" style="border-color:var(--status-live);color:var(--status-live)">ACTIVE</span></div>' +
+        '<div class="sys-status">' + iconSvg + '<span class="tag" style="border-color:var(--status-live);color:var(--status-live)">ACTIVE</span></div>' +
         '<div class="sys-main">' +
           '<div class="sys-head"><h3>' + esc(name) + '</h3>' + (pushed ? '<span class="sys-date">SHIPPED ' + fmtDate(pushed).toUpperCase() + '</span>' : '') + '</div>' +
           '<p class="sys-desc">' + esc(group.blurb) + '</p>' +
@@ -731,6 +847,41 @@
     return cats;
   }
 
+  function renderActivity(repos){
+    var now = new Date();
+    var months = [];
+    for (var i = 11; i >= 0; i--){
+      var d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      months.push({ year: d.getFullYear(), month: d.getMonth(), count: 0 });
+    }
+    repos.forEach(function(r){
+      var d = new Date(r.pushed_at);
+      months.forEach(function(m){
+        if (d.getFullYear() === m.year && d.getMonth() === m.month) m.count++;
+      });
+    });
+
+    var max = Math.max.apply(null, months.map(function(m){ return m.count; }));
+    var monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    var peakIdx = months.reduce(function(bi, m, i, arr){ return m.count > arr[bi].count ? i : bi; }, 0);
+
+    var barsHtml = months.map(function(m, i){
+      var pct = max > 0 ? Math.max((m.count / max) * 100, m.count > 0 ? 6 : 2) : 2;
+      var label = monthNames[m.month] + " " + m.year;
+      var peak = (i === peakIdx && m.count > 0) ? '<span class="peak-label">' + m.count + '</span>' : "";
+      return '<div class="activity-bar" style="height:' + pct.toFixed(1) + '%" tabindex="0" title="' + label + ': ' + m.count + ' repo' + (m.count === 1 ? "" : "s") + ' pushed" aria-label="' + label + ': ' + m.count + ' repositories pushed">' + peak + '</div>';
+    }).join("");
+    document.getElementById("activityBars").innerHTML = barsHtml;
+
+    document.getElementById("activityLabels").innerHTML =
+      '<span>' + monthNames[months[0].month] + " " + months[0].year + '</span>' +
+      '<span>' + monthNames[months[11].month] + " " + months[11].year + '</span>';
+
+    var peak = months[peakIdx];
+    document.getElementById("activitySummary").textContent =
+      max > 0 ? ("peak: " + monthNames[peak.month] + " " + peak.year + " (" + peak.count + ")") : "no activity in range";
+  }
+
   function boot(repos){
     var byName = {};
     repos.forEach(function(r){ byName[r.name] = r; });
@@ -738,6 +889,7 @@
     STATE.repos = repos.slice().sort(function(a,b){ return new Date(b.pushed_at) - new Date(a.pushed_at); });
 
     var cats = setStats(repos);
+    renderActivity(repos);
     renderFeatured(byName);
     renderChips(cats);
     renderRegistry();
