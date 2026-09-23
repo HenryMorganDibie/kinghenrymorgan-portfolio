@@ -1,0 +1,805 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Henry Dibie</title>
+<meta name="description" content="ML, LLM &amp; Backend Systems Engineer — production ML pipelines, LLM &amp; agentic systems, model/AI evaluation, and backend infrastructure. A live registry of shipped systems, synced from GitHub.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B1420;
+    --bg-elevated:#101B2C;
+    --bg-input:#0E1826;
+    --ink:#E8E6DC;
+    --ink-dim:#97A2B5;
+    --ink-faint:#5C6779;
+    --accent:#C98A3B;
+    --accent-ink:#14100A;
+    --line:rgba(232,230,220,0.14);
+    --line-strong:rgba(232,230,220,0.26);
+    --status-live:#6FA88A;
+    --status-live-bg:rgba(111,168,138,0.14);
+    --status-idle:#8B96A8;
+    --font-display:'Big Shoulders Display','Arial Narrow',sans-serif;
+    --font-body:'IBM Plex Sans',-apple-system,'Segoe UI',Roboto,sans-serif;
+    --font-mono:'IBM Plex Mono','SF Mono',Consolas,monospace;
+  }
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      --bg:#E7EAEE;
+      --bg-elevated:#F4F5F7;
+      --bg-input:#FFFFFF;
+      --ink:#10161F;
+      --ink-dim:#48525F;
+      --ink-faint:#818C99;
+      --accent:#8C5A22;
+      --accent-ink:#FFFFFF;
+      --line:rgba(16,22,31,0.14);
+      --line-strong:rgba(16,22,31,0.28);
+      --status-live:#356B4C;
+      --status-live-bg:rgba(53,107,76,0.12);
+      --status-idle:#5B6673;
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#E7EAEE;
+    --bg-elevated:#F4F5F7;
+    --bg-input:#FFFFFF;
+    --ink:#10161F;
+    --ink-dim:#48525F;
+    --ink-faint:#818C99;
+    --accent:#8C5A22;
+    --accent-ink:#FFFFFF;
+    --line:rgba(16,22,31,0.14);
+    --line-strong:rgba(16,22,31,0.28);
+    --status-live:#356B4C;
+    --status-live-bg:rgba(53,107,76,0.12);
+    --status-idle:#5B6673;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    padding-inline:20px;
+  }
+  a{color:inherit;}
+  img{max-width:100%;}
+  [hidden]{display:none!important;}
+  ::selection{background:var(--accent);color:var(--accent-ink);}
+  a:focus-visible, button:focus-visible, input:focus-visible, .chip:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:2px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;}
+  }
+
+  .wrap{max-width:1080px;margin:0 auto;}
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+  }
+
+  /* ---------- Title block (hero) ---------- */
+  .titleblock{
+    margin-top:32px;
+    border:1px solid var(--line-strong);
+  }
+  .tb-grid{
+    display:grid;
+    grid-template-columns:1.1fr 1fr;
+  }
+  .tb-name{
+    padding:32px 28px;
+    border-right:1px solid var(--line-strong);
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    gap:24px;
+  }
+  .tb-name h1{
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:clamp(52px,9vw,104px);
+    line-height:0.88;
+    letter-spacing:-0.01em;
+    margin:0;
+    text-transform:uppercase;
+  }
+  .tb-tag{
+    font-family:var(--font-body);
+    font-size:17px;
+    color:var(--ink-dim);
+    max-width:34ch;
+  }
+  .tb-fields{display:flex;flex-direction:column;}
+  .tb-row{
+    display:grid;
+    grid-template-columns:96px 1fr;
+    gap:14px;
+    padding:14px 24px;
+    border-bottom:1px solid var(--line);
+    align-items:baseline;
+  }
+  .tb-row:last-child{border-bottom:none;}
+  .tb-label{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:0.1em;
+    color:var(--ink-faint);
+    text-transform:uppercase;
+    padding-top:2px;
+  }
+  .tb-value{font-size:15px;color:var(--ink);}
+  .tb-sync{display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:13px;}
+  .sync-dot{width:7px;height:7px;border-radius:50%;background:var(--status-idle);flex-shrink:0;}
+  .sync-dot.live{background:var(--status-live);box-shadow:0 0 0 3px var(--status-live-bg);}
+  .tb-links{display:flex;flex-wrap:wrap;gap:16px;padding-top:16px;padding-bottom:16px;}
+  .tb-links a{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.08em;
+    text-decoration:none;
+    border-bottom:1px solid var(--ink-faint);
+    padding-bottom:2px;
+  }
+  .tb-links a:hover{border-color:var(--accent);color:var(--accent);}
+
+  @media (max-width:720px){
+    .tb-grid{grid-template-columns:1fr;}
+    .tb-name{border-right:none;border-bottom:1px solid var(--line-strong);}
+  }
+
+  /* ---------- Ledger strip (stats) ---------- */
+  .ledger{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    border:1px solid var(--line-strong);
+    border-top:none;
+  }
+  .ledger-cell{
+    padding:20px 24px;
+    border-right:1px solid var(--line);
+  }
+  .ledger-cell:last-child{border-right:none;}
+  .ledger-num{
+    font-family:var(--font-mono);
+    font-variant-numeric:tabular-nums;
+    font-weight:600;
+    font-size:clamp(22px,3vw,30px);
+    color:var(--accent);
+  }
+  .ledger-label{
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin-top:4px;
+  }
+  @media (max-width:720px){
+    .ledger{grid-template-columns:repeat(2,1fr);}
+    .ledger-cell:nth-child(2){border-right:none;}
+  }
+
+  .thesis{
+    max-width:66ch;
+    margin:36px 0 0;
+    font-size:17px;
+    color:var(--ink-dim);
+  }
+  .thesis strong{color:var(--ink);font-weight:600;}
+
+  /* ---------- Section scaffolding ---------- */
+  section.block{margin-top:72px;}
+  .block-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:16px;
+    border-bottom:1px solid var(--line-strong);
+    padding-bottom:14px;
+    flex-wrap:wrap;
+  }
+  .block-title{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(26px,3.4vw,34px);
+    text-transform:uppercase;
+    letter-spacing:-0.01em;
+  }
+  .block-note{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--ink-faint);
+    padding-bottom:4px;
+  }
+
+  /* ---------- Featured systems ---------- */
+  .sys-entry{
+    display:grid;
+    grid-template-columns:104px 1fr auto;
+    gap:20px;
+    padding:26px 0;
+    border-bottom:1px solid var(--line);
+    align-items:start;
+  }
+  .sys-entry:first-of-type{padding-top:30px;}
+  .sys-status{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:0.06em;
+    color:var(--status-live);
+    padding-top:4px;
+  }
+  .sys-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;}
+  .sys-head h3{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:22px;
+    text-transform:none;
+    margin:0;
+  }
+  .sys-date{font-family:var(--font-mono);font-size:11px;color:var(--ink-faint);letter-spacing:0.04em;}
+  .sys-desc{margin:10px 0 14px;color:var(--ink-dim);max-width:62ch;}
+  .sys-shot{
+    display:block;
+    width:100%;
+    max-width:640px;
+    height:auto;
+    border:1px solid var(--line-strong);
+    margin-bottom:14px;
+  }
+  .sys-tags{display:flex;flex-wrap:wrap;gap:8px;}
+  .tag{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:0.03em;
+    color:var(--ink-dim);
+    border:1px solid var(--line-strong);
+    padding:3px 8px;
+    border-radius:2px;
+  }
+  .sys-links{display:flex;flex-direction:column;gap:8px;text-align:right;white-space:nowrap;}
+  .sys-links a{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    text-decoration:none;
+    color:var(--ink);
+    border-bottom:1px solid var(--line-strong);
+  }
+  .sys-links a:hover{color:var(--accent);border-color:var(--accent);}
+  @media (max-width:640px){
+    .sys-entry{grid-template-columns:1fr;gap:8px;}
+    .sys-links{flex-direction:row;text-align:left;padding-top:6px;}
+  }
+
+  /* ---------- Registry ---------- */
+  .registry-controls{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    align-items:center;
+    margin-top:22px;
+  }
+  .search-field{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:var(--bg-input);
+    border:1px solid var(--line-strong);
+    padding:9px 12px;
+    flex:1 1 260px;
+    font-family:var(--font-mono);
+  }
+  .search-field span{color:var(--ink-faint);font-size:13px;}
+  .search-field input{
+    background:transparent;
+    border:none;
+    outline:none;
+    color:var(--ink);
+    font-family:var(--font-mono);
+    font-size:13.5px;
+    width:100%;
+  }
+  .search-field input::placeholder{color:var(--ink-faint);}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;}
+  .chip{
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    letter-spacing:0.02em;
+    color:var(--ink-dim);
+    background:transparent;
+    border:1px solid var(--line-strong);
+    padding:8px 12px;
+    cursor:pointer;
+    border-radius:2px;
+  }
+  .chip:hover{border-color:var(--accent);color:var(--ink);}
+  .chip.active{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);}
+
+  .registry-meta{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--ink-faint);
+    margin-top:16px;
+    padding-bottom:8px;
+    border-bottom:1px solid var(--line);
+  }
+
+  .reg-row{
+    display:grid;
+    grid-template-columns:96px 1fr 130px 190px 28px;
+    gap:16px;
+    padding:14px 0;
+    border-bottom:1px solid var(--line);
+    align-items:baseline;
+  }
+  .reg-row:hover{background:var(--bg-elevated);}
+  .reg-date{font-family:var(--font-mono);font-size:12px;color:var(--ink-faint);font-variant-numeric:tabular-nums;}
+  .reg-main a{
+    text-decoration:none;
+    color:var(--ink);
+    font-weight:600;
+    font-size:14.5px;
+  }
+  .reg-main a:hover{color:var(--accent);}
+  .reg-desc{color:var(--ink-dim);font-size:13px;margin-top:2px;max-width:60ch;}
+  .reg-lang{font-family:var(--font-mono);font-size:11.5px;color:var(--ink-dim);}
+  .reg-cat{font-family:var(--font-mono);font-size:11px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:0.03em;}
+  .reg-go{font-family:var(--font-mono);color:var(--ink-faint);font-size:13px;text-align:right;}
+  @media (max-width:820px){
+    .reg-row{grid-template-columns:1fr;gap:4px;padding:16px 0;}
+    .reg-date{order:3;}
+    .reg-lang,.reg-cat{display:inline;margin-right:10px;}
+  }
+
+  .empty-state{
+    padding:40px 0;
+    color:var(--ink-faint);
+    font-family:var(--font-mono);
+    font-size:13px;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    margin-top:80px;
+    border-top:1px solid var(--line-strong);
+    padding:28px 0 48px;
+  }
+  .footer-grid{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:20px;
+  }
+  .footer-name{font-family:var(--font-display);font-weight:700;font-size:20px;text-transform:uppercase;}
+  .footer-role{color:var(--ink-faint);font-size:13px;margin-top:4px;}
+  .footer-links{display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
+  .footer-links a{
+    font-family:var(--font-mono);
+    font-size:13px;
+    text-decoration:none;
+    color:var(--ink-dim);
+    border-bottom:1px solid transparent;
+  }
+  .footer-links a:hover{color:var(--accent);border-color:var(--accent);}
+  @media (max-width:560px){
+    .footer-links{align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="titleblock">
+    <div class="tb-grid">
+      <div class="tb-name">
+        <h1>Henry<br>Dibie</h1>
+        <p class="tb-tag">Building production ML pipelines, LLM &amp; agentic systems, model/AI evaluation, and backend infrastructure that ships.</p>
+      </div>
+      <div class="tb-fields">
+        <div class="tb-row"><span class="tb-label">Role</span><span class="tb-value">ML / LLM / Backend Systems Engineer</span></div>
+        <div class="tb-row"><span class="tb-label">Open to</span><span class="tb-value">Remote &amp; relocation — open worldwide</span></div>
+        <div class="tb-row"><span class="tb-label">Since</span><span class="tb-value">Building in public since 2022 — shipped systems and counting</span></div>
+        <div class="tb-row">
+          <span class="tb-label">Registry</span>
+          <span class="tb-value tb-sync"><span class="sync-dot" id="syncDot"></span><span id="syncText">connecting to github…</span></span>
+        </div>
+        <div class="tb-row tb-links">
+          <a href="mailto:henrymorgandibie@gmail.com">EMAIL</a>
+          <a href="https://github.com/HenryMorganDibie" target="_blank" rel="noopener">GITHUB</a>
+          <a href="https://www.linkedin.com/in/kinghenrymorgan/" target="_blank" rel="noopener">LINKEDIN</a>
+          <a href="/resume.pdf" target="_blank" rel="noopener">RESUME</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="ledger" id="ledger">
+    <div class="ledger-cell"><div class="ledger-num" id="statRepos">—</div><div class="ledger-label">Public repositories</div></div>
+    <div class="ledger-cell"><div class="ledger-num">2022</div><div class="ledger-label">Building since</div></div>
+    <div class="ledger-cell"><div class="ledger-num" id="statCats">—</div><div class="ledger-label">System categories</div></div>
+    <div class="ledger-cell"><div class="ledger-num" id="statLive">—</div><div class="ledger-label">Deployed with a live URL</div></div>
+  </div>
+
+  <p class="thesis">Most of what's below shipped in the last twelve months: <strong>payment infrastructure, backend engineering, RAG and agentic systems, production ML platforms, and full-stack products</strong> — on top of an earlier run of applied data-science and analytics work. The registry underneath pulls straight from GitHub, so it's never behind what's actually public.</p>
+
+  <section class="block">
+    <div class="block-head">
+      <h2 class="block-title">Featured Systems</h2>
+      <span class="block-note">11 selected builds · 2025–2026</span>
+    </div>
+    <div id="featuredList"></div>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2 class="block-title">Full Registry</h2>
+      <span class="block-note" id="registryNote">live from api.github.com</span>
+    </div>
+    <div class="registry-controls">
+      <div class="search-field">
+        <span>grep</span>
+        <input type="text" id="searchInput" placeholder="search name, description, stack…" autocomplete="off">
+      </div>
+      <div class="chips" id="categoryChips"></div>
+    </div>
+    <div class="registry-meta" id="registryMeta">loading…</div>
+    <div id="registryList"></div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-name">Henry Dibie</div>
+        <div class="footer-role">ML, LLM &amp; Backend Systems Engineer — open to remote &amp; relocation</div>
+      </div>
+      <div class="footer-links">
+        <a href="mailto:henrymorgandibie@gmail.com">henrymorgandibie@gmail.com</a>
+        <a href="https://github.com/HenryMorganDibie" target="_blank" rel="noopener">github.com/HenryMorganDibie</a>
+        <a href="https://www.linkedin.com/in/kinghenrymorgan/" target="_blank" rel="noopener">linkedin.com/in/kinghenrymorgan</a>
+        <a href="/resume.pdf" target="_blank" rel="noopener">Download resume (PDF)</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var GH_USER = "HenryMorganDibie";
+  var DROP = ["Deep-Learning","Henry-Chukwunwike-Dibie","Power-BI-projects","HenryMorganDibie","streamlit-example",
+    "Maven-Analyics-Bank-Customer-Churn",
+    "Customer-Segmentation-and-Insights-from-Messy-Data-A-Data-Cleaning-and-Analysis-Journey.",
+    "Enhanced-AI-Journalist-Application",
+    "Pizza-Analytics-Slicing-through-Sales-for-Savvy-Solutions",
+    "Nigerian-Food-Prices",
+    "Admob-Data-Analysis-Challenge",
+    "Nigerian-Agric-Exports",
+    "PayScalePro-Navigating-the-Landscape-of-Professional-Salaries",
+    "TradeDepot-Order-Summary-",
+    "Weather-Insights-and-Predictive-Modeling-Pipeline",
+    "Comprehensive-Analysis-of-Bitcoin-Price-Trends-and-Technical-Indicators-Over-the-Past-8-Years",
+    "Automated-weather-data-collection-and-analysis-using-RPA-",
+    "Online-Retail",
+    "Customer-Segmentation-Insights-Unveiling-E-commerce-Customer-Behavior",
+    "Customer-Data-Analysis-",
+    "Maven-Coffee-Challenge---Great-American-Coffee-Taste-Test",
+    "Superstore-Business-Performance-Insights",
+    "Sleep-Health-and-Lifestyle",
+    "Smart-Hospitality-Ecosystem-PowerPoint-and-Report",
+    "Stress-Prediction-with-ML-and-Analysis",
+    "Apple-Emissions",
+    "Water-Quality-Dataset",
+    "Maternal-Health-Data",
+    "Human-Resources",
+    "JustDrinks-Ltd",
+    "Data-Analysis-with-Python-Projects",
+    "Robotic-Process-Automation",
+    "Maven-Analytics---Northwind-Traders",
+    "Data-Analysis-Of-Meat-Consumption",
+    "Global-Internet-Users",
+    "Black-Friday-Sales",
+    "Brain-MRI-Images-for-Brain-Tumor-Detection",
+    "AdventureWorks2019_HumanResources.Employee-",
+    "Supermarket-sales-Analysis-with-Power-BI",
+    "Fake-News-football-classification-model",
+    "Machine-Learning-and-Natural-Language-Processing",
+    "April-s-Edition-of-Data-Analysis-Challenge---The-Olist-sales-dataset",
+    "Google-Stock-Prices-2023",
+    "Messi-VS-Ronaldo-Stats",
+    "BigCats-Image-Classification-with-ML-DL-techniques-",
+    "HBO-Max-Movies-and-TV-Shows-Analysis-and-Prediction",
+    "ElectricityPrices-TimeSeries-forecast-and-Explanatory-Data-Analysis",
+    "Uni-Prediction-with-ML-and-Analysis",
+    "Data-Analysis-of-Parental-Leaves-using-Power-BI",
+    "Fifa-21-Prediction-with-ML-and-Analysis",
+    "Pandas-Numpy-Matplotlib"
+  ];
+
+  var OVERRIDES = {
+    "the-scribe":"AI / LLM & Agents",
+    "devads":"Full-Stack & Production Systems",
+    "narrative-harm-classifier":"AI / LLM & Agents",
+    "subscription-manager":"Full-Stack & Production Systems",
+    "KingHenryMorgan-DbtDataEngineer":"Full-Stack & Production Systems",
+    "Private-Equity-Scraper":"Full-Stack & Production Systems"
+  };
+
+  function categorize(r){
+    if (OVERRIDES[r.name]) return OVERRIDES[r.name];
+    var blob = [r.name, r.description||"", (r.topics||[]).join(" ")].join(" ").toLowerCase();
+    var lang = r.language || "";
+    function any(words){ return words.some(function(w){ return blob.indexOf(w) !== -1; }); }
+
+    if (any(["llm","rag","agent","gpt","langchain","langgraph","chatbot","groq","openai","semantic-layer","worldmodel","dreamer"])) return "AI / LLM & Agents";
+    if (any(["fraud","credit-risk","credit risk","churn","risk-management","risk-based-pricing","mbs-trading","fixed-income","fintech","loan","quant","trading","lending","insurance","payment","iso 8583","iso8583"])) return "Fintech, Risk & Trading";
+    if (any(["fastapi","docker","api","backend","postgres","mysql","sql","etl","pipeline","dbt","mlops","feature-store","data-engineering","supabase","firebase","expo","react-native","mobile","typescript","javascript","websocket","grpc","marketplace","ecommerce"]) && ["Python","TypeScript","JavaScript","Java",""].indexOf(lang) !== -1) return "Full-Stack & Production Systems";
+    if (any(["dashboard","streamlit","power bi","powerbi","excel","tableau","eda","exploratory","analysis","analytics","visualization","plotly","shiny"])) return "Data Analysis & Visualization";
+    if (lang === "Jupyter Notebook" || any(["classification","prediction","regression","clustering","forecast","ml","machine learning","cnn","svm","xgboost","scikit"])) return "ML & Applied Data Science";
+    return "Other Projects";
+  }
+
+  var FEATURED_GROUPS = [
+    {
+      repos: ["switchyard"],
+      blurb: "Production-oriented ISO 8583 payment switch reference implementation on Java and Spring Boot — the routing and rail logic behind card and wire transactions, built to portfolio-milestone discipline end to end.",
+      tags: ["Java", "Spring Boot", "ISO 8583", "Payments infra"]
+    },
+    {
+      repos: ["schema-watch"],
+      blurb: "An npm CLI that diffs live API response shapes — not values — names the exact frontend files a breaking change will break, and fails CI before it ships. Published to npm, own SaaS.",
+      tags: ["TypeScript", "Node.js", "CI/CD", "npm package"],
+      image: "https://schema-watch-web.vercel.app/og.png"
+    },
+    {
+      repos: ["interview-copilot"],
+      blurb: "Real-time interview-prep desktop app with a local-first LLM router and native audio capture, so responses never leave the machine mid-interview. Tauri + React.",
+      tags: ["TypeScript", "Tauri", "React", "Local LLM"]
+    },
+    {
+      repos: ["pulse-platform", "pulse-agent"],
+      blurb: "Multi-tenant persona API: one shared, persisted user model drives persona-conditioned review simulation and recommendations across tenants — grew out of a hackathon LangGraph agent into a deployed platform.",
+      tags: ["Python", "FastAPI", "LangGraph"]
+    },
+    {
+      repos: ["ajoledger-api", "ajoledger-web"],
+      blurb: "A coordination layer for Nigerian rotating savings groups (ajo/esusu/adashe) that never touches the money. FastAPI + Postgres backend, PWA frontend — replaces WhatsApp screenshots with one shared source of truth for contributions, rotation order, and disputes.",
+      tags: ["Python", "FastAPI", "PostgreSQL", "PWA"]
+    },
+    {
+      repos: ["knowledge-rag-api"],
+      blurb: "Production RAG backend over Document360 and SharePoint: pgvector hybrid search, per-user ACL filtering, and grounded answers with citations — FastAPI on Aurora Postgres.",
+      tags: ["Python", "FastAPI", "pgvector", "AWS Aurora"]
+    },
+    {
+      repos: ["multivendor-marketplace-platform", "multivendor-marketplace-mobile"],
+      blurb: "Location-based multi-vendor marketplace for small businesses across Nigeria — Firebase backend plus a cross-platform iOS/Android/Web app with catalog, cart, real-time chat, and subscriptions.",
+      tags: ["TypeScript", "Firebase", "React Native"]
+    },
+    {
+      repos: ["churn-intelligence-platform"],
+      blurb: "Production ML platform for subscription churn: FastAPI scoring service, XGBoost with SHAP explainability, PSI-based drift monitoring, and a Streamlit ops dashboard — real-time and 10k-row batch scoring, containerized.",
+      tags: ["Python", "XGBoost", "Docker", "Azure"]
+    },
+    {
+      repos: ["deal-intelligence-agent"],
+      blurb: "A cross-market financial intelligence agent that reads regulatory filings and financial news continuously, surfacing M&A activity, credit distress, insider activity, and regulatory signals as structured analyst-grade briefs.",
+      tags: ["Python", "Agentic pipeline", "NLP"]
+    },
+    {
+      repos: ["the-scribe"],
+      blurb: "A collaboration: AI writing assistant for Christian authors — personalized voice modeling and theological ghostwriting for long-form manuscript generation, deployed and in active use.",
+      tags: ["Python", "LLM", "Voice modeling", "Collaboration"],
+      image: "https://the-scribe-ebon.vercel.app/og.png"
+    },
+    {
+      repos: ["chirp-api-refactoring"],
+      blurb: "Production refactoring of a Twitter-like gRPC API: replaced SHA-256 passwords with bcrypt behind a transparent migration, cut N+1 queries from 31 to 3 per feed load, added request tracing and a unified error taxonomy, and wired a CI pipeline with moonrepo affected-project detection.",
+      tags: ["gRPC", "TypeScript", "Python", "Security", "Performance"],
+      image: "https://raw.githubusercontent.com/HenryMorganDibie/chirp-api-refactoring/main/docs/audit-summary.png"
+    }
+  ];
+
+  function ghUrl(name){ return "https://github.com/" + GH_USER + "/" + name; }
+  function esc(s){
+    return (s||"").replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];
+    });
+  }
+  function fmtDate(iso){
+    var d = new Date(iso);
+    var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    return months[d.getUTCMonth()] + " " + d.getUTCFullYear();
+  }
+
+  function renderFeatured(byName){
+    var out = "";
+    FEATURED_GROUPS.forEach(function(group){
+      var primary = byName[group.repos[0]];
+      var urls = group.repos.map(function(n){
+        var r = byName[n];
+        return { name: n, url: r ? r.html_url : ghUrl(n), homepage: r ? r.homepage : "" };
+      });
+      var name = group.repos.length > 1 ? group.repos.join(" + ") : group.repos[0];
+      var pushed = primary ? primary.pushed_at : null;
+
+      var links = "";
+      urls.forEach(function(u){
+        links += '<a href="' + u.url + '" target="_blank" rel="noopener">Source: ' + esc(u.name) + ' →</a>';
+        if (u.homepage){
+          links += '<a href="' + esc(u.homepage) + '" target="_blank" rel="noopener">Live →</a>';
+        }
+      });
+
+      var shot = group.image ? '<img class="sys-shot" src="' + esc(group.image) + '" alt="' + esc(name) + ' preview" loading="lazy">' : '';
+
+      out += '<article class="sys-entry">' +
+        '<div class="sys-status"><span class="tag" style="border-color:var(--status-live);color:var(--status-live)">ACTIVE</span></div>' +
+        '<div class="sys-main">' +
+          '<div class="sys-head"><h3>' + esc(name) + '</h3>' + (pushed ? '<span class="sys-date">SHIPPED ' + fmtDate(pushed).toUpperCase() + '</span>' : '') + '</div>' +
+          '<p class="sys-desc">' + esc(group.blurb) + '</p>' +
+          shot +
+          '<div class="sys-tags">' + group.tags.map(function(t){ return '<span class="tag">' + esc(t) + '</span>'; }).join("") + '</div>' +
+        '</div>' +
+        '<div class="sys-links">' + links + '</div>' +
+      '</article>';
+    });
+    document.getElementById("featuredList").innerHTML = out;
+  }
+
+  var STATE = { repos: [], filterCat: "All", query: "" };
+
+  function renderChips(categoryCounts){
+    var cats = ["All"].concat(Object.keys(categoryCounts).sort(function(a,b){ return categoryCounts[b]-categoryCounts[a]; }));
+    var html = cats.map(function(c){
+      var count = c === "All" ? STATE.repos.length : categoryCounts[c];
+      var active = c === STATE.filterCat ? " active" : "";
+      return '<button type="button" class="chip' + active + '" data-cat="' + esc(c) + '">' + esc(c) + ' (' + count + ')</button>';
+    }).join("");
+    var el = document.getElementById("categoryChips");
+    el.innerHTML = html;
+    Array.prototype.forEach.call(el.querySelectorAll(".chip"), function(btn){
+      btn.addEventListener("click", function(){
+        STATE.filterCat = btn.getAttribute("data-cat");
+        renderRegistry();
+      });
+    });
+  }
+
+  function renderRegistry(){
+    var q = STATE.query.trim().toLowerCase();
+    var filtered = STATE.repos.filter(function(r){
+      if (STATE.filterCat !== "All" && r.category !== STATE.filterCat) return false;
+      if (!q) return true;
+      var blob = (r.name + " " + (r.description||"") + " " + (r.language||"") + " " + (r.topics||[]).join(" ")).toLowerCase();
+      return blob.indexOf(q) !== -1;
+    });
+
+    document.getElementById("registryMeta").textContent =
+      "showing " + filtered.length + " of " + STATE.repos.length + " repositories";
+
+    var listEl = document.getElementById("registryList");
+    if (!filtered.length){
+      listEl.innerHTML = '<div class="empty-state">no matches — try a different search or category.</div>';
+      return;
+    }
+
+    var html = filtered.map(function(r){
+      return '<div class="reg-row">' +
+        '<div class="reg-date">' + fmtDate(r.pushed_at) + '</div>' +
+        '<div class="reg-main">' +
+          '<a href="' + r.html_url + '" target="_blank" rel="noopener">' + esc(r.name) + '</a>' +
+          (r.description ? '<div class="reg-desc">' + esc(r.description) + '</div>' : '') +
+        '</div>' +
+        '<div class="reg-lang">' + esc(r.language || "—") + '</div>' +
+        '<div class="reg-cat">' + esc(r.category) + '</div>' +
+        '<div class="reg-go">' + (r.homepage ? '<a href="' + esc(r.homepage) + '" target="_blank" rel="noopener" title="Live demo">live</a>' : '→') + '</div>' +
+      '</div>';
+    }).join("");
+    listEl.innerHTML = html;
+  }
+
+  function setStats(repos){
+    document.getElementById("statRepos").textContent = repos.length;
+    var cats = {};
+    repos.forEach(function(r){ cats[r.category] = (cats[r.category]||0) + 1; });
+    document.getElementById("statCats").textContent = Object.keys(cats).length;
+    var liveCount = repos.filter(function(r){
+      return r.homepage && r.homepage.indexOf("medium.com") === -1 && r.homepage.indexOf("linktr.ee") === -1;
+    }).length;
+    document.getElementById("statLive").textContent = liveCount;
+    return cats;
+  }
+
+  function boot(repos){
+    var byName = {};
+    repos.forEach(function(r){ byName[r.name] = r; });
+
+    STATE.repos = repos.slice().sort(function(a,b){ return new Date(b.pushed_at) - new Date(a.pushed_at); });
+
+    var cats = setStats(repos);
+    renderFeatured(byName);
+    renderChips(cats);
+    renderRegistry();
+
+    document.getElementById("syncDot").classList.add("live");
+    document.getElementById("syncText").textContent = "synced live from github.com/" + GH_USER;
+
+    document.getElementById("searchInput").addEventListener("input", function(e){
+      STATE.query = e.target.value;
+      renderRegistry();
+    });
+  }
+
+  function processRaw(rawRepos){
+    return rawRepos
+      .filter(function(r){ return !r.fork && DROP.indexOf(r.name) === -1; })
+      .map(function(r){
+        return {
+          name: r.name,
+          description: r.description || "",
+          html_url: r.html_url,
+          homepage: r.homepage || "",
+          language: r.language || "",
+          pushed_at: r.pushed_at,
+          topics: r.topics || [],
+          category: categorize({ name: r.name, description: r.description, topics: r.topics, language: r.language })
+        };
+      });
+  }
+
+  function fetchAllRepos(){
+    var perPage = 100;
+    function fetchPage(page, acc){
+      var url = "https://api.github.com/users/" + GH_USER + "/repos?per_page=" + perPage + "&page=" + page + "&sort=pushed";
+      return fetch(url, { headers: { "Accept": "application/vnd.github+json" } }).then(function(res){
+        if (!res.ok) throw new Error("github api " + res.status);
+        return res.json();
+      }).then(function(data){
+        acc = acc.concat(data);
+        if (data.length === perPage) return fetchPage(page + 1, acc);
+        return acc;
+      });
+    }
+    return fetchPage(1, []);
+  }
+
+  fetchAllRepos().then(function(raw){
+    boot(processRaw(raw));
+  }).catch(function(err){
+    console.warn("Live GitHub fetch failed:", err);
+    document.getElementById("syncDot").style.background = "#B5544A";
+    document.getElementById("syncText").textContent = "github api unreachable — try again shortly";
+    document.getElementById("registryMeta").innerHTML =
+      'Could not load the live registry from GitHub just now. Browse it directly at ' +
+      '<a href="https://github.com/HenryMorganDibie?tab=repositories" target="_blank" rel="noopener" style="color:var(--accent)">github.com/HenryMorganDibie</a>.';
+    var chips = document.getElementById("categoryChips");
+    if (chips) chips.innerHTML = "";
+    var feat = document.getElementById("featuredList");
+    if (feat) feat.innerHTML = '<div class="empty-state">Featured systems load from the same live registry — retry once GitHub responds.</div>';
+  });
+
+})();
+</script>
+</body>
+</html>
