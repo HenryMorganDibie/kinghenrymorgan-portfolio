@@ -143,8 +143,59 @@
   @media (max-width:980px){
     .wrap{max-width:100%;}
   }
-  #featured, #writing, #registry{scroll-margin-top:24px;}
-  .sys-entry{scroll-margin-top:24px;}
+  #featured, #writing, #registry{scroll-margin-top:74px;}
+  .sys-entry{scroll-margin-top:74px;}
+  @media (min-width:981px){
+    #featured, #writing, #registry, .sys-entry{scroll-margin-top:24px;}
+  }
+
+  /* ---------- Mobile nav ---------- */
+  .mobilenav{display:none;}
+  @media (max-width:980px){
+    .mobilenav{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      position:sticky;
+      top:0;
+      z-index:10;
+      background:var(--bg);
+      border-bottom:1px solid var(--line-strong);
+      padding:14px 0;
+      margin-top:0;
+    }
+  }
+  .mobilenav-pills{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    -ms-overflow-style:none;
+    scrollbar-width:none;
+  }
+  .mobilenav-pills::-webkit-scrollbar{display:none;}
+  .mobilenav-pills a{
+    flex-shrink:0;
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.02em;
+    color:var(--ink-dim);
+    text-decoration:none;
+    border:1px solid var(--line-strong);
+    padding:7px 14px;
+    border-radius:3px;
+    white-space:nowrap;
+  }
+  .mobilenav-pills a.active{color:var(--accent-ink);background:var(--accent);border-color:var(--accent);}
+  .mobilenav-select{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    color:var(--ink);
+    background:var(--bg-input);
+    border:1px solid var(--line-strong);
+    border-radius:3px;
+    padding:9px 10px;
+    width:100%;
+  }
 
   .eyebrow{
     font-family:var(--font-mono);
@@ -607,6 +658,29 @@
     </div>
   </nav>
 <div class="wrap" id="top">
+  <div class="mobilenav">
+    <div class="mobilenav-pills">
+      <a href="#featured" data-section="featured">Featured</a>
+      <a href="#writing" data-section="writing">Writing</a>
+      <a href="#registry" data-section="registry">Registry</a>
+    </div>
+    <select class="mobilenav-select" id="mobileProjectJump" aria-label="Jump to project">
+      <option value="">Jump to project…</option>
+      <option value="p-switchyard">Switchyard</option>
+      <option value="p-schema-watch">Schema-Watch</option>
+      <option value="p-interview-copilot">Interview Copilot</option>
+      <option value="p-pulse-platform">Pulse Platform</option>
+      <option value="p-ajoledger-api">AjoLedger</option>
+      <option value="p-knowledge-rag-api">Knowledge RAG API</option>
+      <option value="p-multivendor-marketplace-platform">Marketplace</option>
+      <option value="p-churn-intelligence-platform">Churn Intelligence</option>
+      <option value="p-deal-intelligence-agent">Deal Intelligence</option>
+      <option value="p-the-scribe">The Scribe</option>
+      <option value="p-chirp-api-refactoring">Chirp API Audit</option>
+      <option value="p-fraud-detection-api">Fraud Detection API</option>
+      <option value="p-llm-audit-poc">LLM Audit</option>
+    </select>
+  </div>
 
   <header class="titleblock">
     <div class="tb-grid">
@@ -1158,17 +1232,19 @@
   }
 
   function setupSidenav(){
-    var links = Array.prototype.slice.call(document.querySelectorAll('.sidenav a[data-section]'));
+    var links = Array.prototype.slice.call(document.querySelectorAll('[data-section]'));
     if (!links.length || !("IntersectionObserver" in window)) return;
     var byId = {};
-    links.forEach(function(a){ byId[a.getAttribute("data-section")] = a; });
+    links.forEach(function(a){
+      var id = a.getAttribute("data-section");
+      (byId[id] = byId[id] || []).push(a);
+    });
 
     var observer = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
         if (entry.isIntersecting){
           links.forEach(function(a){ a.classList.remove("active"); });
-          var link = byId[entry.target.id];
-          if (link) link.classList.add("active");
+          (byId[entry.target.id] || []).forEach(function(a){ a.classList.add("active"); });
         }
       });
     }, { rootMargin: "-15% 0px -70% 0px" });
@@ -1179,6 +1255,17 @@
     });
   }
   setupSidenav();
+
+  var mobileJump = document.getElementById("mobileProjectJump");
+  if (mobileJump){
+    mobileJump.addEventListener("change", function(){
+      var id = mobileJump.value;
+      if (!id) return;
+      var target = document.getElementById(id);
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      mobileJump.value = "";
+    });
+  }
 
   fetchAllRepos().then(function(raw){
     boot(processRaw(raw));
