@@ -63,6 +63,7 @@
 
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
   body{
     background:var(--bg);
     color:var(--ink);
@@ -70,7 +71,6 @@
     font-size:16px;
     line-height:1.55;
     -webkit-font-smoothing:antialiased;
-    padding-inline:20px;
   }
   a{color:inherit;}
   img{max-width:100%;}
@@ -81,10 +81,70 @@
     outline-offset:2px;
   }
   @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
     *{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;}
   }
 
-  .wrap{max-width:1080px;margin:0 auto;}
+  .layout{
+    display:flex;
+    align-items:flex-start;
+    gap:44px;
+    max-width:1324px;
+    margin:0 auto;
+    padding-inline:20px;
+  }
+  .sidenav{
+    width:196px;
+    flex-shrink:0;
+    position:sticky;
+    top:28px;
+    padding-top:32px;
+    display:flex;
+    flex-direction:column;
+    gap:26px;
+    max-height:calc(100vh - 56px);
+    overflow-y:auto;
+  }
+  .sidenav-logo{
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:22px;
+    color:var(--ink);
+    text-decoration:none;
+    letter-spacing:-0.01em;
+  }
+  .sidenav-group{display:flex;flex-direction:column;gap:1px;}
+  .sidenav-label{
+    font-family:var(--font-mono);
+    font-size:10px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin-bottom:8px;
+  }
+  .sidenav a{
+    font-family:var(--font-mono);
+    font-size:12px;
+    line-height:1.6;
+    color:var(--ink-dim);
+    text-decoration:none;
+    padding:4px 0 4px 10px;
+    border-left:2px solid transparent;
+    margin-left:-1px;
+  }
+  .sidenav a:hover{color:var(--ink);border-left-color:var(--line-strong);}
+  .sidenav a.active{color:var(--accent);border-left-color:var(--accent);}
+  @media (max-width:980px){
+    .sidenav{display:none;}
+    .layout{display:block;padding-inline:20px;}
+  }
+
+  .wrap{max-width:1080px;margin:0;flex:1;min-width:0;padding-block:0;}
+  @media (max-width:980px){
+    .wrap{max-width:100%;}
+  }
+  #featured, #writing, #registry{scroll-margin-top:24px;}
+  .sys-entry{scroll-margin-top:24px;}
 
   .eyebrow{
     font-family:var(--font-mono);
@@ -520,7 +580,33 @@
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="layout">
+  <nav class="sidenav" aria-label="Page navigation">
+    <a href="#top" class="sidenav-logo">HD</a>
+    <div class="sidenav-group">
+      <div class="sidenav-label">Sections</div>
+      <a href="#featured" data-section="featured">Featured Systems</a>
+      <a href="#writing" data-section="writing">Writing</a>
+      <a href="#registry" data-section="registry">Full Registry</a>
+    </div>
+    <div class="sidenav-group">
+      <div class="sidenav-label">Projects</div>
+      <a href="#p-switchyard">Switchyard</a>
+      <a href="#p-schema-watch">Schema-Watch</a>
+      <a href="#p-interview-copilot">Interview Copilot</a>
+      <a href="#p-pulse-platform">Pulse Platform</a>
+      <a href="#p-ajoledger-api">AjoLedger</a>
+      <a href="#p-knowledge-rag-api">Knowledge RAG API</a>
+      <a href="#p-multivendor-marketplace-platform">Marketplace</a>
+      <a href="#p-churn-intelligence-platform">Churn Intelligence</a>
+      <a href="#p-deal-intelligence-agent">Deal Intelligence</a>
+      <a href="#p-the-scribe">The Scribe</a>
+      <a href="#p-chirp-api-refactoring">Chirp API Audit</a>
+      <a href="#p-fraud-detection-api">Fraud Detection API</a>
+      <a href="#p-llm-audit-poc">LLM Audit</a>
+    </div>
+  </nav>
+<div class="wrap" id="top">
 
   <header class="titleblock">
     <div class="tb-grid">
@@ -564,7 +650,7 @@
 
   <p class="thesis">Most of what's below shipped in the last twelve months: <strong>payment infrastructure, backend engineering, RAG and agentic systems, production ML platforms, model/AI evaluation, and full-stack products</strong> — on top of an earlier run of applied data-science and analytics work. The registry underneath pulls straight from GitHub, so it's never behind what's actually public.</p>
 
-  <section class="block">
+  <section class="block" id="featured">
     <div class="block-head">
       <h2 class="block-title">Featured Systems</h2>
       <span class="block-note">13 selected builds · 2025–2026</span>
@@ -572,7 +658,7 @@
     <div id="featuredList"></div>
   </section>
 
-  <section class="block">
+  <section class="block" id="writing">
     <div class="block-head">
       <h2 class="block-title">Writing</h2>
       <span class="block-note">10 pieces · medium.com/@KingHenryMorgansDiary</span>
@@ -651,7 +737,7 @@
     </div>
   </section>
 
-  <section class="block">
+  <section class="block" id="registry">
     <div class="block-head">
       <h2 class="block-title">Full Registry</h2>
       <span class="block-note" id="registryNote">live from api.github.com</span>
@@ -682,6 +768,7 @@
     </div>
   </footer>
 
+</div>
 </div>
 
 <script>
@@ -903,7 +990,7 @@
       var iconPath = ICONS[group.icon] || "";
       var iconSvg = iconPath ? '<span class="sys-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + iconPath + '</svg></span>' : "";
 
-      out += '<article class="sys-entry">' +
+      out += '<article class="sys-entry" id="p-' + esc(group.repos[0]) + '">' +
         '<div class="sys-status">' + iconSvg + '<span class="tag" style="border-color:var(--status-live);color:var(--status-live)">ACTIVE</span></div>' +
         '<div class="sys-main">' +
           '<div class="sys-head"><h3>' + esc(name) + '</h3>' + (pushed ? '<span class="sys-date">SHIPPED ' + fmtDate(pushed).toUpperCase() + '</span>' : '') + '</div>' +
@@ -1069,6 +1156,29 @@
     }
     return fetchPage(1, []);
   }
+
+  function setupSidenav(){
+    var links = Array.prototype.slice.call(document.querySelectorAll('.sidenav a[data-section]'));
+    if (!links.length || !("IntersectionObserver" in window)) return;
+    var byId = {};
+    links.forEach(function(a){ byId[a.getAttribute("data-section")] = a; });
+
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          links.forEach(function(a){ a.classList.remove("active"); });
+          var link = byId[entry.target.id];
+          if (link) link.classList.add("active");
+        }
+      });
+    }, { rootMargin: "-15% 0px -70% 0px" });
+
+    ["featured", "writing", "registry"].forEach(function(id){
+      var el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+  }
+  setupSidenav();
 
   fetchAllRepos().then(function(raw){
     boot(processRaw(raw));
