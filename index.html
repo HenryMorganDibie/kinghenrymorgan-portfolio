@@ -457,6 +457,40 @@
     font-size:13px;
   }
 
+  /* ---------- Writing ---------- */
+  .write-list{margin-top:8px;}
+  .write-row{
+    display:grid;
+    grid-template-columns:80px 1fr;
+    gap:16px;
+    padding:16px 0;
+    border-bottom:1px solid var(--line);
+    align-items:baseline;
+  }
+  .write-row:first-child{padding-top:22px;}
+  .write-date{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:0.04em;
+    color:var(--ink-faint);
+    font-variant-numeric:tabular-nums;
+  }
+  .write-main a{
+    color:var(--ink);
+    text-decoration:none;
+    font-weight:600;
+    font-size:15px;
+  }
+  .write-main a:hover{color:var(--accent);}
+  .write-hook{
+    color:var(--ink-dim);
+    font-size:13px;
+    margin-top:4px;
+  }
+  @media (max-width:640px){
+    .write-row{grid-template-columns:1fr;gap:4px;}
+  }
+
   /* ---------- Footer ---------- */
   footer{
     margin-top:80px;
@@ -528,14 +562,93 @@
     <div class="activity-labels" id="activityLabels"></div>
   </div>
 
-  <p class="thesis">Most of what's below shipped in the last twelve months: <strong>payment infrastructure, backend engineering, RAG and agentic systems, production ML platforms, and full-stack products</strong> — on top of an earlier run of applied data-science and analytics work. The registry underneath pulls straight from GitHub, so it's never behind what's actually public.</p>
+  <p class="thesis">Most of what's below shipped in the last twelve months: <strong>payment infrastructure, backend engineering, RAG and agentic systems, production ML platforms, model/AI evaluation, and full-stack products</strong> — on top of an earlier run of applied data-science and analytics work. The registry underneath pulls straight from GitHub, so it's never behind what's actually public.</p>
 
   <section class="block">
     <div class="block-head">
       <h2 class="block-title">Featured Systems</h2>
-      <span class="block-note">11 selected builds · 2025–2026</span>
+      <span class="block-note">13 selected builds · 2025–2026</span>
     </div>
     <div id="featuredList"></div>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2 class="block-title">Writing</h2>
+      <span class="block-note">10 pieces · medium.com/@KingHenryMorgansDiary</span>
+    </div>
+    <div class="write-list">
+      <div class="write-row">
+        <span class="write-date">AUG 2026</span>
+        <div class="write-main">
+          <a href="https://medium.com/@KingHenryMorgansDiary/i-built-a-tool-that-watches-apis-for-the-moment-they-break-their-contract-be01467e8c63" target="_blank" rel="noopener">I Built a Tool That Watches APIs for the Moment They Break Their Contract</a>
+          <div class="write-hook">How schema-watch diffs API contracts and fails CI before a breaking change ships.</div>
+        </div>
+      </div>
+      <div class="write-row">
+        <span class="write-date">JUN 2026</span>
+        <div class="write-main">
+          <a href="https://medium.com/@KingHenryMorgansDiary/reinforcement-learning-evaluation-for-multi-step-llm-agents-failure-modes-and-how-to-catch-them-a1f3bf2acd58" target="_blank" rel="noopener">Reinforcement Learning Evaluation for Multi-Step LLM Agents: Failure Modes and How to Catch Them</a>
+          <div class="write-hook">Where multi-step agent evaluation breaks down, and how to catch it before production.</div>
+        </div>
+      </div>
+      <div class="write-row">
+        <span class="write-date">JUN 2026</span>
+        <div class="write-main">
+          <a href="https://medium.com/@KingHenryMorgansDiary/the-hidden-tax-killing-your-ml-teams-velocity-and-the-architecture-decision-that-fixes-it-8fcb723ba5a0" target="_blank" rel="noopener">The Hidden Tax Killing Your ML Team's Velocity — And the Architecture Decision That Fixes It</a>
+          <div class="write-hook">The feature-store architecture decision behind removing that velocity tax.</div>
+        </div>
+      </div>
+      <div class="write-row">
+        <span class="write-date">MAY 2026</span>
+        <div class="write-main">
+          <a href="https://medium.com/@KingHenryMorgansDiary/i-built-an-ai-agent-for-nigerian-fintechs-from-the-ground-up-heres-everything-i-learned-dbc24869abcb" target="_blank" rel="noopener">I Built an AI Agent for Nigerian Fintechs From the Ground Up — Here's Everything I Learned</a>
+          <div class="write-hook">Building an agentic fintech ops tool end to end for the Nigerian financial ecosystem.</div>
+        </div>
+      </div>
+      <div class="write-row">
+        <span class="write-date">MAY 2026</span>
+        <div class="write-main">
+          <a href="https://medium.com/@KingHenryMorgansDiary/building-a-production-rag-backend-for-enterprise-knowledge-bases-architecture-decisions-and-064b97c42ac0" target="_blank" rel="noopener">Building a Production RAG Backend for Enterprise Knowledge Bases: Architecture, Decisions, and…</a>
+          <div class="write-hook">The architecture and decisions behind knowledge-rag-api — hybrid search, ACL filtering, grounded citations.</div>
+        </div>
+      </div>
+      <div class="write-row">
+        <span class="write-date">APR 2026</span>
+        <div class="write-main">
+          <a href="https://medium.com/@KingHenryMorgansDiary/i-audited-a-fine-tuned-llm-that-lost-50-percentage-points-after-training-heres-what-i-found-3348bde343b9" target="_blank" rel="noopener">I Audited a Fine-Tuned LLM That Lost 50 Percentage Points After Training. Here's What I Found.</a>
+          <div class="write-hook">Diagnosing a BFCL regression in a fine-tuned tool-calling model.</div>
+        </div>
+      </div>
+      <div class="write-row">
+        <span class="write-date">APR 2026</span>
+        <div class="write-main">
+          <a href="https://medium.com/@KingHenryMorgansDiary/architecting-strategic-solvency-a-systems-engineering-approach-to-corporate-credit-recovery-d22e9827393e" target="_blank" rel="noopener">Architecting Strategic Solvency: A Systems Engineering Approach to Corporate Credit Recovery</a>
+          <div class="write-hook">A systems-engineering framework for corporate credit risk evaluation and recovery.</div>
+        </div>
+      </div>
+      <div class="write-row">
+        <span class="write-date">MAR 2026</span>
+        <div class="write-main">
+          <a href="https://medium.com/@KingHenryMorgansDiary/how-i-won-a-data-analytics-challenge-by-reporting-that-nothing-works-6596a07b2301" target="_blank" rel="noopener">How I Won a Data Analytics Challenge by Reporting That Nothing Works</a>
+          <div class="write-hook">Winning the Splendor Analytics trial-activation challenge by reporting the truth instead of a good story.</div>
+        </div>
+      </div>
+      <div class="write-row">
+        <span class="write-date">MAR 2026</span>
+        <div class="write-main">
+          <a href="https://medium.com/@KingHenryMorgansDiary/how-to-audit-a-production-ml-inference-api-a-practical-checklist-1e596d7a3847" target="_blank" rel="noopener">How to Audit a Production ML Inference API — A Practical Checklist</a>
+          <div class="write-hook">A practical checklist for auditing a production ML inference API — performance, security, deployment.</div>
+        </div>
+      </div>
+      <div class="write-row">
+        <span class="write-date">MAR 2026</span>
+        <div class="write-main">
+          <a href="https://medium.com/@KingHenryMorgansDiary/ecclesia-checkin-how-i-replaced-a-church-roster-with-a-time-locked-qr-attendance-engine-b244697508c2" target="_blank" rel="noopener">Ecclesia-CheckIn: How I Replaced a Church Roster with a Time-Locked QR Attendance Engine</a>
+          <div class="write-hook">Replacing a manual church roster with a QR-driven, time-locked check-in engine.</div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="block">
@@ -660,7 +773,8 @@
       blurb: "An npm CLI that diffs live API response shapes — not values — names the exact frontend files a breaking change will break, and fails CI before it ships. Published to npm, own SaaS.",
       tags: ["TypeScript", "Node.js", "CI/CD", "npm package"],
       image: "https://schema-watch-web.vercel.app/og.png",
-      icon: "terminal"
+      icon: "terminal",
+      article: { title: "I Built a Tool That Watches APIs for the Moment They Break Their Contract", url: "https://medium.com/@KingHenryMorgansDiary/i-built-a-tool-that-watches-apis-for-the-moment-they-break-their-contract-be01467e8c63" }
     },
     {
       repos: ["interview-copilot"],
@@ -684,7 +798,8 @@
       repos: ["knowledge-rag-api"],
       blurb: "Production RAG backend over Document360 and SharePoint: pgvector hybrid search, per-user ACL filtering, and grounded answers with citations — FastAPI on Aurora Postgres.",
       tags: ["Python", "FastAPI", "pgvector", "AWS Aurora"],
-      icon: "database"
+      icon: "database",
+      article: { title: "Building a Production RAG Backend for Enterprise Knowledge Bases: Architecture, Decisions, and…", url: "https://medium.com/@KingHenryMorgansDiary/building-a-production-rag-backend-for-enterprise-knowledge-bases-architecture-decisions-and-064b97c42ac0" }
     },
     {
       repos: ["multivendor-marketplace-platform", "multivendor-marketplace-mobile"],
@@ -717,6 +832,20 @@
       tags: ["gRPC", "TypeScript", "Python", "Security", "Performance"],
       image: "https://raw.githubusercontent.com/HenryMorganDibie/chirp-api-refactoring/main/docs/audit-summary.png",
       icon: "shield"
+    },
+    {
+      repos: ["fraud-detection-api"],
+      blurb: "Production-hardened FastAPI inference service scoring real-time fraud predictions: latency-budgeted for sub-200ms p99, joblib over pickle to close an arbitrary-code-execution risk, multi-stage Docker build that fails the image on any failing test, and a documented ECS/Fargate blue-green deployment with drift monitoring.",
+      tags: ["Python", "FastAPI", "Docker", "AWS ECS/Fargate"],
+      icon: "eye",
+      article: { title: "How to Audit a Production ML Inference API — A Practical Checklist", url: "https://medium.com/@KingHenryMorgansDiary/how-to-audit-a-production-ml-inference-api-a-practical-checklist-1e596d7a3847" }
+    },
+    {
+      repos: ["llm-audit-poc"],
+      blurb: "Independent audit of a fine-tuned LLM tool-calling PoC for a FinTech client: decomposed a BFCL regression, assessed inference-stack risk, and delivered a production go/no-go recommendation. Qwen-2.5, LoRA, SGLang, vLLM.",
+      tags: ["LLM evaluation", "Qwen-2.5", "LoRA", "vLLM/SGLang"],
+      icon: "clipboard",
+      article: { title: "I Audited a Fine-Tuned LLM That Lost 50 Percentage Points After Training. Here's What I Found.", url: "https://medium.com/@KingHenryMorgansDiary/i-audited-a-fine-tuned-llm-that-lost-50-percentage-points-after-training-heres-what-i-found-3348bde343b9" }
     }
   ];
 
@@ -731,7 +860,9 @@
     bars: '<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>',
     radio: '<circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 010 8.49M7.76 16.25a6 6 0 010-8.49m11.31-2.83a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/>',
     feather: '<path d="M20.24 12.24a6 6 0 00-8.49-8.49L5 10.5V19h8.5z"/><path d="M16 8L2 22"/><path d="M17.5 15H9"/>',
-    shield: '<path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/>'
+    shield: '<path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/>',
+    eye: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',
+    clipboard: '<rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><path d="M9 12l2 2 4-4"/>'
   };
 
   function ghUrl(name){ return "https://github.com/" + GH_USER + "/" + name; }
@@ -764,6 +895,9 @@
           links += '<a href="' + esc(u.homepage) + '" target="_blank" rel="noopener">Live →</a>';
         }
       });
+      if (group.article){
+        links += '<a href="' + esc(group.article.url) + '" target="_blank" rel="noopener">Write-up →</a>';
+      }
 
       var shot = group.image ? '<img class="sys-shot" src="' + esc(group.image) + '" alt="' + esc(name) + ' preview" loading="lazy">' : '';
       var iconPath = ICONS[group.icon] || "";
