@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Henry Dibie</title>
-<meta name="description" content="ML, LLM &amp; Backend Systems Engineer — production ML pipelines, LLM &amp; agentic systems, model/AI evaluation, and backend infrastructure. A live registry of shipped systems, synced from GitHub.">
+<meta name="description" content="Building full-stack AI products with ML pipelines, LLM applications, agentic systems, and backend infrastructure, from prototype to production. A live registry of shipped systems, synced from GitHub.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -655,6 +655,7 @@
       <a href="#p-chirp-api-refactoring">Chirp API Audit</a>
       <a href="#p-fraud-detection-api">Fraud Detection API</a>
       <a href="#p-llm-audit-poc">LLM Audit</a>
+      <a href="#p-devads">DevAds</a>
     </div>
   </nav>
 <div class="wrap" id="top">
@@ -679,6 +680,7 @@
       <option value="p-chirp-api-refactoring">Chirp API Audit</option>
       <option value="p-fraud-detection-api">Fraud Detection API</option>
       <option value="p-llm-audit-poc">LLM Audit</option>
+      <option value="p-devads">DevAds</option>
     </select>
   </div>
 
@@ -686,7 +688,7 @@
     <div class="tb-grid">
       <div class="tb-name">
         <h1>Henry<br>Dibie</h1>
-        <p class="tb-tag">Building production ML pipelines, LLM &amp; agentic systems, model/AI evaluation, and backend infrastructure that ships.</p>
+        <p class="tb-tag">Building full-stack AI products with ML pipelines, LLM applications, agentic systems, and backend infrastructure, from prototype to production.</p>
       </div>
       <div class="tb-fields">
         <div class="tb-row"><span class="tb-label">Role</span><span class="tb-value">ML / LLM / Backend Systems Engineer</span></div>
@@ -727,7 +729,7 @@
   <section class="block" id="featured">
     <div class="block-head">
       <h2 class="block-title">Featured Systems</h2>
-      <span class="block-note">13 selected builds · 2025–2026</span>
+      <span class="block-note">14 selected builds · 2025–2026</span>
     </div>
     <div id="featuredList"></div>
   </section>
@@ -1007,6 +1009,13 @@
       tags: ["LLM evaluation", "Qwen-2.5", "LoRA", "vLLM/SGLang"],
       icon: "clipboard",
       article: { title: "I Audited a Fine-Tuned LLM That Lost 50 Percentage Points After Training. Here's What I Found.", url: "https://medium.com/@KingHenryMorgansDiary/i-audited-a-fine-tuned-llm-that-lost-50-percentage-points-after-training-heres-what-i-found-3348bde343b9" }
+    },
+    {
+      repos: ["devads"],
+      blurb: "Sponsorship infrastructure for AI-powered development: sponsors fund campaigns, developers opt in and earn verified rewards into a ledger-backed wallet, and platforms integrate through a protocol SDK (@devads/ad-sdk). Idempotent server-side charge verification, with integration tests against real Postgres covering replay attacks, budget exhaustion, and concurrent rewards. Turborepo monorepo — three Next.js apps, a Fastify API on Prisma/Postgres, and a live VS Code extension.",
+      tags: ["TypeScript", "Fastify", "Prisma", "PostgreSQL", "Turborepo", "VS Code extension"],
+      image: "https://raw.githubusercontent.com/HenryMorganDibie/devads/main/docs/screenshots/01-hero.jpg",
+      icon: "gift"
     }
   ];
 
@@ -1023,7 +1032,8 @@
     feather: '<path d="M20.24 12.24a6 6 0 00-8.49-8.49L5 10.5V19h8.5z"/><path d="M16 8L2 22"/><path d="M17.5 15H9"/>',
     shield: '<path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/>',
     eye: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',
-    clipboard: '<rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><path d="M9 12l2 2 4-4"/>'
+    clipboard: '<rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><path d="M9 12l2 2 4-4"/>',
+    gift: '<polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C9 2 12 7 12 7z"/>'
   };
 
   function ghUrl(name){ return "https://github.com/" + GH_USER + "/" + name; }
